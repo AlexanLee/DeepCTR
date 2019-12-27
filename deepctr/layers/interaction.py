@@ -1036,7 +1036,7 @@ Tongwen](https://arxiv.org/pdf/1905.09433.pdf)
         filed_size = len(input_shape)
         embedding_size = input_shape[0][-1]
 
-        return (None, 1, filed_size*(filed_size-1)//2 * embedding_size)
+        return None, 1, filed_size * (filed_size - 1) // 2 * embedding_size
 
     def get_config(self, ):
         config = {'bilinear_type': self.bilinear_type, 'seed': self.seed}

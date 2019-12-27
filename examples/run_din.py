@@ -1,5 +1,6 @@
 import numpy as np
 
+import tensorflow as tf
 from deepctr.models import DIN
 from deepctr.inputs import SparseFeat,VarLenSparseFeat,DenseFeat,get_feature_names
 
@@ -29,6 +30,8 @@ def get_xy_fd():
 
 
 if __name__ == "__main__":
+    if tf.__version__ >= '2.0.0':
+        tf.compat.v1.disable_eager_execution()
     x, y, feature_columns, behavior_feature_list = get_xy_fd()
     model = DIN(feature_columns, behavior_feature_list)
     model.compile('adam', 'binary_crossentropy',
