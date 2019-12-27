@@ -2,15 +2,17 @@ import numpy as np
 
 import tensorflow as tf
 from deepctr.models import DIN
-from deepctr.inputs import SparseFeat,VarLenSparseFeat,DenseFeat,get_feature_names
+from deepctr.inputs import SparseFeat, VarLenSparseFeat, DenseFeat, get_feature_names
 
 
 def get_xy_fd():
-
-    feature_columns = [SparseFeat('user',3,embedding_dim=10),SparseFeat(
-        'gender', 2,embedding_dim=4), SparseFeat('item', 3 + 1,embedding_dim=8), SparseFeat('item_gender', 2 + 1,embedding_dim=4),DenseFeat('score', 1)]
-    feature_columns += [VarLenSparseFeat('hist_item', maxlen=4, vocabulary_size=3+1, embedding_dim=8,embedding_name='item'),
-                        VarLenSparseFeat('hist_item_gender', maxlen=4,vocabulary_size=3+1,embedding_dim=4, embedding_name='item_gender')]
+    feature_columns = [SparseFeat('user', 3, embedding_dim=10), SparseFeat(
+        'gender', 2, embedding_dim=4), SparseFeat('item', 3 + 1, embedding_dim=8),
+                       SparseFeat('item_gender', 2 + 1, embedding_dim=4), DenseFeat('score', 1)]
+    feature_columns += [
+        VarLenSparseFeat('hist_item', maxlen=4, vocabulary_size=3 + 1, embedding_dim=8, embedding_name='item'),
+        VarLenSparseFeat('hist_item_gender', maxlen=4, vocabulary_size=3 + 1, embedding_dim=4,
+                         embedding_name='item_gender')]
 
     behavior_feature_list = ["item", "item_gender"]
     uid = np.array([0, 1, 2])
@@ -24,7 +26,7 @@ def get_xy_fd():
 
     feature_dict = {'user': uid, 'gender': ugender, 'item': iid, 'item_gender': igender,
                     'hist_item': hist_iid, 'hist_item_gender': hist_igender, 'score': score}
-    x = {name:feature_dict[name] for name in get_feature_names(feature_columns)}
+    x = {name: feature_dict[name] for name in get_feature_names(feature_columns)}
     y = [1, 0, 1]
     return x, y, feature_columns, behavior_feature_list
 
